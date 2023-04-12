@@ -12,6 +12,40 @@ import argparse
 import imutils
 import cv2
 
+from  picamera import PiCamera
+import time
+from time import sleep 
+
+camera = PiCamera() 
+camera.start_preview()
+sleep(10)
+# camera.stop_preview()
+# camera.close()
+# time.sleep(5)
+camera.capture("/home/pi/particle_test/particle/image8.jpg")
+camera.stop_preview()
+
+
+
+camera.start_preview()
+sleep(10)
+# camera.stop_preview()
+# camera.close()
+# time.sleep(5)
+camera.capture("/home/pi/particle_test/particle/image9.jpg")
+camera.stop_preview()
+print("Images captured.")
+
+# camera.start_preview()
+# sleep(30)
+# # camera.stop_preview()
+# # camera.close()
+# # time.sleep(5)
+# camera.capture("/home/pi/particle_test/particle/image10.jpg")
+# camera.stop_preview()
+# print("DONE.")
+
+
 
 
 def inch_to_mm(x):
@@ -97,15 +131,15 @@ def plot_vmd(name, dv01, dv05, dv09, radiuses):
     
     xpos = (dv01+abs(xmin))/(xmax+abs(xmin))
     plt.axvline(x = dv01, color = 'r',label = 'DV 0.1')
-    plt.text(xpos, 1.02, 'DV01:' + str(dv01)[0:4], horizontalalignment='center',verticalalignment='center', transform=ax.transAxes)
+    plt.text(xpos, 1.02, str(dv01)[0:4], horizontalalignment='center',verticalalignment='center', transform=ax.transAxes)
 
     xpos = (dv05+abs(xmin))/(xmax+abs(xmin))    
     plt.axvline(x = dv05, color = 'r',label = 'DV 0.5')
-    plt.text(xpos, 1.02, 'DV05:' + str(dv05)[0:5], horizontalalignment='center',verticalalignment='center', transform=ax.transAxes)
+    plt.text(xpos, 1.02, str(dv05)[0:5], horizontalalignment='center',verticalalignment='center', transform=ax.transAxes)
     
     xpos = (dv09+abs(xmin))/(xmax+abs(xmin))
     plt.axvline(x = dv09, color = 'r',label = 'DV 0.9')
-    plt.text(xpos, 1.02, 'DV09:' + str(dv09)[0:5], horizontalalignment='center',verticalalignment='center', transform=ax.transAxes)
+    plt.text(xpos, 1.02, str(dv09)[0:5], horizontalalignment='center',verticalalignment='center', transform=ax.transAxes)
     
     fig.savefig(name)
 
@@ -117,13 +151,19 @@ def particle_detection(path, physical_width_of_view, physical_height_of_view, mi
     # thresholding
     channel = image[:,:,2]
     thresh = cv2.threshold(channel, 155, 255,cv2.THRESH_BINARY_INV)[1]
-
+    
     D = ndimage.distance_transform_edt(thresh)
+    
     localMax = peak_local_max(D, indices=False, min_distance=min_distance,labels=thresh)
+    
     # perform a connected component analysis on the local peaks,
     # using 8-connectivity, then appy the Watershed algorithm
     markers = ndimage.label(localMax, structure=np.ones((3, 3)))[0]
+    
+    
     labels = watershed(-D, markers, mask=thresh)
+   
+    
     print("[INFO] {} unique segments found".format(len(np.unique(labels)) - 1))
 
     # get measurements of objects
@@ -180,16 +220,16 @@ def particle_detection(path, physical_width_of_view, physical_height_of_view, mi
 
 
 # path of folder of images
-root_path = "/home/hendrik/Dropbox/Upwork/Particle Count/images_rasperry/"
+root_path = "/home/pi/particle_test/particle/"
 # image names
-images = ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg"]
+images = ["image8.jpg","image9.jpg"]
 # name of csv file
 file_name = "output.csv"
 # write header into csv file
 write_header(root_path + file_name)
 # set physical width and height of the image in [mm], use  inch_to_mm() if in inch
-physical_width_of_view = 24 #inch_to_mm(3)
-physical_height_of_view = 23 # inch_to_mm(1)
+physical_width_of_view = inch_to_mm(3)
+physical_height_of_view =inch_to_mm(1)
 
 # parameters
 min_distance = 5
@@ -203,6 +243,7 @@ for image_name in images:
     # perform particle detection
     img_output, dvs, radiuses = particle_detection(image_path, physical_width_of_view, physical_height_of_view, 
             min_distance= min_distance, enclosing_method = enclosing_method)
+
    
     # save image with markers to file
     cv2.imwrite(root_path + "output_" + image_name, img_output)
@@ -215,8 +256,10 @@ for image_name in images:
     show_img = cv2.resize(img_output, dsize, interpolation = cv2.INTER_AREA)
     cv2.imshow("Output", show_img)
     cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    #cv2.destroyAllWindows()
     
     # save stats to csv file
     save_add_to_csv(root_path + file_name, image_name, dvs, radiuses)
+
+
 

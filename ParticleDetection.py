@@ -1,7 +1,25 @@
 import cv2
 import numpy as np
 import csv
+from  picamera import PiCamera
+import time
+from time import sleep 
 
+camera = PiCamera()
+camera.start_preview()
+sleep(10)
+# camera.stop_preview()
+# camera.close()
+# time.sleep(5)
+camera.capture("/home/pi/particle_test/particle/image8.jpg")
+camera.stop_preview()
+print("DONE.")
+# image=cv2.imread("/home/pi/particle_test/particle/image8.jpg")
+# print('shape of image',img.shape)
+# crop= image[:,50:1870]
+# cv2.imshow('TEST',crop)
+cv2.waitKey(0)
+path = '/home/pi/particle_test/particle/image8.jpg'
 
 def inch_to_mm(x):
     return x * 25400
@@ -99,17 +117,17 @@ def getSize(path, threshold, physical_width_of_view, physical_height_of_view):
     
     # show output
     binary = cv2.cvtColor(binary, cv2.COLOR_GRAY2BGR)
-    images_concat = np.concatenate((img_orig, img), axis=0)
+    images_concat = np.concatenate((img, img_orig), axis=0)
+    # cv2.imshow("img", img)
+    # cv2.imshow("Particle detection", img_orig)
     # show image
     cv2.imshow("Particle detection", images_concat)
     cv2.waitKey(0) 
-    cv2.destroyAllWindows() 
+    # cv2.destroyAllWindows() 
     
 
-path = "A16.bmp"
-"A16, A25, A26, A36, A46"
 
-image_width = 3
+image_width = 1
 image_height = 1
 
 physical_width_of_view = inch_to_mm(image_width)
