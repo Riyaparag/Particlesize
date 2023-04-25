@@ -29,15 +29,16 @@ AMCD carries out insecticide testing to measure, droplet count and diameter spec
 ### Functions created
 1.	inch_to_mm: The actual image size is in inches and the droplets are to be measured in micrometers. For scaling purposes, a function was created to convert inches to um..
 2.	getParticleRadius:  Variables calculated using connected component analysis were used to get individual droplet radius. This radius was used to calculate droplet diameters. 
-3.	particle_detection: The main function of the algorithm, takes in 
+3.	particle_detection: The main function of the algorithm, takes in path of the image, its physical widht and height in um, enclosing method, the minimum distance to output the number of droplets recognized and labels to create an appropriate mask for contouring. 
 4.	get_vmd: the median of the list of diameters used to calculate DV0.5, DV0.1, and DV0.9
 5.	plot_vmd: Plotted vertical lines to represent  DV0.5, DV0.1, and DV0.9   on a histogram for number of droplets vs a range droplet diameters to replicate the output histogram obtained from the current AMCD tool.
 
 ### Results
-
+The algorithm developed was first applied on images obtained from the AMCD. These are images A16, A25, A26, A36, A46. The processed and contoured output after applying the algorithm can be seen in output_A16-46. The consolidated calculated parameters for droplet count, diameter spectrum values and relative span is as seen in the output.csv file. Once tested on the images from ANCD, this algorithm was run on an image pipeline with 3 different insecticide spray slide images taken by the Raspberry Pi camera for real-time testing. 
 
 
 ### Reliability of the system  <br>
+Now that the system worked as whole from. taking images to calculating mathematical parameters, there was a need to check the reliability of the output
 
 To test the reliability of this Droplet Analysis and Measurement device a single water sensitive card was sprayed with water. An image of the same slide was taken thrice using the PiCamera pipeline as shown in Figure 4-27,4-30, 4-33 . Just like in the previous section the algorithm was applied to the images in a loop.The output images are as shown in Figure 4-28, 4-31, 4-34. The results for number of particles, diameter volume spectrum values and relative span were similar as shown in Figure 4-36 as a CSV output. The csv output clearly shows the similar results for the number of particles, diameter volume spectrum and relative span for all three input slides. This shows that the results obtained from the droplet analyzer are reliable.
 
