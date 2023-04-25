@@ -17,7 +17,7 @@ AMCD carries out insecticide testing to measure, droplet count and diameter spec
 1. **PiCamera**: Take multiple images using Raspberry Pi with a delay to create an image pipeline.  Allows taking images of the multiple insecticide slides at once in real-time.
 2. **Numpy**: Basic numpy functions like np.mean, np.concatenate, np.zeros, np.pi, np.sort, np.unique applied in the algorithm.
 
-3. OpenCV: 
+3. **OpenCV**: 
    1. **Threshold**: Separate foreground from background using Global Thresholding with a value 155.
    2. **Contour**: Contour pixels using cv2.findContours which were labeled using watershed algorithm. 
    3. **Enclosing Method**: Circle, Rectangle; Used to mark the contoured droplets on the image.
@@ -27,7 +27,7 @@ AMCD carries out insecticide testing to measure, droplet count and diameter spec
 7. **Matplotlib**: Achieved similar output format as the current tool used at AMCD by plotting histogram and analyzing the Volume Median Diameter (DV0.5).
 
 ### Functions created
-1.	**inch_to_mm**: The actual image size is in inches and the droplets are to be measured in micrometers(um). For scaling purposes, a function was created to convert inches to um.
+1.	**inch_to_mm**: The actual image size is in inches and the droplets are to be measured in micrometers (um). For scaling purposes, a function was created to convert inches to um.
 2.	**getParticleRadius**:  Variables calculated using connected component analysis were used to get individual droplet radius. This radius was used to calculate droplet diameters. 
 3.	**particle_detection**: The main function of the algorithm, takes in path of the image, its physical widht and height in um, enclosing method, the minimum distance to output the number of droplets recognized and labels to create an appropriate mask for contouring. 
 4.	**get_vmd**: the median of the list of diameters used to calculate DV0.5, DV0.1, and DV0.9.
