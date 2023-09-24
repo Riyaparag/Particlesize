@@ -37,7 +37,7 @@
 The algorithm developed was first applied on images obtained from the AMCD. These are images **A16, A25, A26, A36, A46**. The processed and contoured output after applying the algorithm can be seen in output_A16-46. The consolidated calculated parameters for droplet count, diameter spectrum values and relative span is as seen in the **output_A16-46.csv** file. Once tested on the images from AMCD, this algorithm was run on an image pipeline with 3 different insecticide spray slide images taken by the Raspberry Pi camera for real-time testing. The input images are **image1, 2,3** . The output images **output_image1,2,3** are able to  **replicate the images** obtained from the current tool used at the AMCD. **Instanteneous output** is obtained and stored in the **output_realtime.csv**. 
 
 
-### Reliability of the system  <br>
+### Reliability of the system 
 Now that the system worked as whole from taking images to calculating mathematical parameters, there was a need to check the reliability of the system. 
 To test the reliability of this Droplet Analysis and Measurement device a single water sensitive card was sprayed with water. An image of the same slide was taken thrice using the PiCamera pipeline as shown in **image 8,9,10** . The algorithm was applied to the images in a loop.The processed and contoured output images output_image8,9,10 are added. The results for number of particles, diameter volume spectrum values and relative span are **quite similar** as proved in the **output_reliability.csv** file. This proves that the results obtained from the droplet analyzer are **reliable** .
 
