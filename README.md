@@ -1,9 +1,8 @@
 # Droplet Measurement and Analysis Using Image Processing for Insecticide Spray
 ### About the Project
-1. The professionals at the Anastasia Mosquito Control District (AMCD) are experts in providing environmental-friendly mosquito control services, community education, and scientific research on mosquito-borne diseases for St. Johns County, St. Augustine, FL. 
-AMCD carries out insecticide testing to measure, droplet count and diameter spectrum values (DV0.5, DV0.1, and DV0.9).
+1. The professionals at the Anastasia Mosquito Control District (AMCD) are experts in providing environmental-friendly mosquito control services, community education, and scientific research on mosquito-borne diseases for St. Johns County, St. Augustine, FL. AMCD carries out insecticide testing to measure, droplet count and diameter spectrum values (DV0.5, DV0.1, and DV0.9).
 2. Particle droplet size and count of insecticides are essential parameters to determine the amount of insecticide needed to cover an intended target area. Diameter volume spectrum values such as DV0.5, DV0.1, and DV0.9 describe the application an insecticide is suitable for and its susceptibility to spray drift.
-3. The current tool i.e., Artium PDI TK1 Droplet Analyzer used to calculate the droplet size, count and diameter volume spectrum parameters at the AMCD could be time consuming, costly, and tedious to use. It is an expensive benchtop tool which can only test sample slides indoorS, consequently, it does not give instantaneous results.
+3. The current tool i.e., Artium PDI TK1 Droplet Analyzer used to calculate the droplet size, count and diameter volume spectrum parameters at the AMCD could be time consuming, costly, and tedious to use. It is an expensive benchtop tool which can only test sample slides indoors, consequently, it does not give instantaneous results.
 4. Around 60 slides need to be tested after each insecticide testing, which takes atleast 3-4 hours according to the experts at the AMCD. Collecting the slides from the field and testing indoors, requires heavy labour. There is a need to create a system which could make this process more efficient.
 5. The system proposed is a user-oriented, Internet of Things (IoT) based cost-effective portable tool to give a real-time droplet size and diameter spectrum measurement using image processing for insecticide spray.
 
@@ -21,10 +20,11 @@ AMCD carries out insecticide testing to measure, droplet count and diameter spec
    1. **Threshold**: Separate foreground from background using Global Thresholding with a value 155.
    2. **Contour**: Contour pixels using cv2.findContours which were labeled using watershed algorithm. 
    3. **Enclosing Method**: Circle, Rectangle; Used to mark the contoured droplets on the image.
-4. **Distance Transform, Peak_local_max**: Using the distance transform the distance between each foreground and nearest background pixel is calculated, from this matrix the peak_local_max selects the maximum values with a minimum distance of 5 pixels as set in this algorithm. This was specifically used to avoid under/over-segmentation due the small droplet size [1-150um] of the insecticide spray.
-5. **Watershed**: The threshold image was used to make a mask to label the background pixels as ‘0’ and ‘255’ to allocate memory for the labeled region.
-6. **CSV**: Store and display the calculated parameters such as, Droplet Count, DV0.5, DV0.1, and DV0.9, Relative Span.
-7. **Matplotlib**: Achieved similar output format as the current tool used at AMCD by plotting histogram and analyzing the Volume Median Diameter (DV0.5).
+      
+4. **Distance Transform, Peak_local_max**: Using the distance transform the distance between each foreground and nearest background pixel is calculated, from this matrix the peak_local_max selects the maximum values with a minimum distance of 5 pixels as set in this algorithm. This was specifically used to avoid under/over-segmentation due the small droplet size [1-150um] of the insecticide spray.   
+6. **Watershed**: The threshold image was used to make a mask to label the background pixels as ‘0’ and ‘255’ to allocate memory for the labeled region.
+7. **CSV**: Store and display the calculated parameters such as, Droplet Count, DV0.5, DV0.1, and DV0.9, Relative Span.
+8. **Matplotlib**: Achieved similar output format as the current tool used at AMCD by plotting histogram and analyzing the Volume Median Diameter (DV0.5).
 
 ### Functions created
 1.	**inch_to_mm**: The actual image size is in inches and the droplets are to be measured in micrometers (um). For scaling purposes, a function was created to convert inches to um.
